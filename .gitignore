@@ -8,3 +8,11 @@
 .idea/vcs.xml
 MongoDBExample.iml
 SimpleJsonStore.iml
+target/SimpleJsonStore-1.0-SNAPSHOT.jar
+target/maven-archiver/pom.properties
+target/classes/com/gaurav/servlets/SimpleJsonStoreLauncher.class
+target/classes/com/gaurav/servlets/SimpleJsonServlet.class
+target/classes/com/gaurav/servlets/SimpleJsonHandler.class
+target/classes/com/gaurav/DBAccessUtil.class
+target/classes/com/gaurav/dao/SimpleJsonDAO.class
+target/classes/com/gaurav/dao/SimpleJsonAyncResponseWriter.class
