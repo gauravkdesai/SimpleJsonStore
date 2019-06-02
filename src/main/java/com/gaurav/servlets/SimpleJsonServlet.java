@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * Main Servlet which is face of this application
  * exposes two methods, doGet and doPost
  * doGet expects and id in url path for which we search for document in DB
- * doPost expects a JSON object with id as one of the attribute. The JSON object is tored in DB
+ * doPost expects a JSON object with id as one of the attribute. The JSON object is stored in DB
  */
 @WebServlet(urlPatterns = "/database/*", asyncSupported = true)
 public class SimpleJsonServlet extends HttpServlet {
@@ -31,7 +31,7 @@ public class SimpleJsonServlet extends HttpServlet {
         // extract id from request url path /database/id
         String pathInfo = request.getPathInfo();
         String id = pathInfo != null ? pathInfo.substring(1) : ""; // remove "/" from "/id" to get "id"
-        System.out.println("Searching for id="+id);
+        System.out.println("Searching for id=" + id);
 
         // Start async context for asynchronous request processing
         AsyncContext asyncCtx = request.startAsync();
@@ -51,8 +51,6 @@ public class SimpleJsonServlet extends HttpServlet {
         // Read json request body from request
         String documentJson = request.getReader().lines().collect(Collectors.joining());
         System.out.println("Document received=" + documentJson);
-
-        //TODO check if string is valid json object. only then start async context
 
         // Start async context for asynchronous request processing
         AsyncContext asyncCtx = request.startAsync();

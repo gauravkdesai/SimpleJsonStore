@@ -1,7 +1,7 @@
 package com.gaurav.listeners;
 
+import com.gaurav.params.Parameters;
 import com.gaurav.util.DBAccessUtil;
-import com.gaurav.util.Parameters;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -13,8 +13,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by gauravdesai on 02/06/19.
  * <p>
- * Context listener to execute tasks in separate thread than HTTP request thread
- * Creates a executor threadpool and keeps in in context
+ * Context listener to create framework to execute tasks in separate thread than HTTP request thread
+ * Creates a executor threadpool and keeps in in context for every request thread to access
  * Shuts down the threadpool and DB connections when context is closed.
  */
 @WebListener

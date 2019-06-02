@@ -1,5 +1,6 @@
 package com.gaurav.util;
 
+import com.gaurav.params.Parameters;
 import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoClients;
 import com.mongodb.async.client.MongoCollection;
@@ -23,7 +24,8 @@ public class DBAccessUtil {
         if (dbClient == null) {
             synchronized (DBAccessUtil.class) {
                 if (dbClient == null) {
-                    dbClient = MongoClients.create(); //TODO read DB details from property file
+                    dbClient = MongoClients.create(Parameters.getDatabaseConnectionString());
+                    System.out.println("Connecting to DB URL=" + Parameters.getDatabaseConnectionString());
                 }
             }
         }
@@ -36,7 +38,8 @@ public class DBAccessUtil {
         if (database == null) {
             synchronized (DBAccessUtil.class) {
                 if (database == null) {
-                    database = getDBClient().getDatabase(Parameters.getDatabaseName()); //TODO read DB name from property file
+                    database = getDBClient().getDatabase(Parameters.getDatabaseName());
+                    System.out.println("Connecting to DB Name=" + Parameters.getDatabaseName());
                 }
             }
         }
@@ -49,7 +52,9 @@ public class DBAccessUtil {
         if (collection == null) {
             synchronized (DBAccessUtil.class) {
                 if (collection == null) {
-                    collection = getDatabase().getCollection(Parameters.getDbCollectionName()); //TODO read collection name from property file
+                    collection = getDatabase().getCollection(Parameters.getDbCollectionName());
+                    System.out.println("Using DB collection=" + Parameters.getDbCollectionName());
+
                 }
             }
         }

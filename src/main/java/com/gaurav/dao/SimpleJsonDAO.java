@@ -26,11 +26,17 @@ public class SimpleJsonDAO {
      * @param asyncContext
      */
     public static void insertNewJsonToDB(String json, AsyncContext asyncContext) {
-        Document doc = Document.parse(json);
-        Throwable t = null;
+        try {
+            Document doc = Document.parse(json);
+            if(!doc.containsKey("id")){
+                throw new Exception("Input JSON should have id");
+            }
 
-        MongoCollection<Document> collection = DBAccessUtil.getCollection();
-        collection.insertOne(doc, (result, throwable) -> SimpleJsonAsyncResponseWriter.respondSuccessInsertOne(asyncContext, throwable));
+            MongoCollection<Document> collection = DBAccessUtil.getCollection();
+            collection.insertOne(doc, (result, throwable) -> SimpleJsonAsyncResponseWriter.respondSuccessInsertOne(asyncContext, throwable));
+        } catch (Throwable throwable) {
+            SimpleJsonAsyncResponseWriter.respondSuccessInsertOne(asyncContext, throwable);
+        }
 
     }
 
@@ -42,9 +48,13 @@ public class SimpleJsonDAO {
      * @param asyncContext
      */
     public static void findDocumentById(String id, AsyncContext asyncContext) {
-        MongoCollection<Document> collection = DBAccessUtil.getCollection();
-        List<Document> documents = new ArrayList<>();
-        collection.find(Filters.eq("id", id)).into(documents, (document, throwable) -> SimpleJsonAsyncResponseWriter.respondFindResult(id, asyncContext, documents, throwable));
+        try {
+            MongoCollection<Document> collection = DBAccessUtil.getCollection();
+            List<Document> documents = new ArrayList<>();
+            collection.find(Filters.eq("id", id)).into(documents, (document, throwable) -> SimpleJsonAsyncResponseWriter.respondFindResult(id, asyncContext, documents, throwable));
+        } catch (Throwable throwable) {
+            SimpleJsonAsyncResponseWriter.respondFindResult(id, asyncContext, null, throwable);
+        }
 
     }
 

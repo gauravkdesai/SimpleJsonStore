@@ -1,0 +1,177 @@
+{
+	"variables": [],
+	"info": {
+		"name": "JsonStore",
+		"_postman_id": "7d12e988-ca5d-ef31-463a-9d2d1c853706",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NewID123",
+			"request": {
+				"url": "localhost:8080/database",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\":\"123\",\n   \"foo\":\"far\"\n}"
+				},
+				"description": "create NewID"
+			},
+			"response": [
+				{
+					"id": "02503c4a-3171-41c8-bc3c-c1922dbdd33b",
+					"name": "NewID_without_ID",
+					"originalRequest": {
+						"url": "localhost:8080/database",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identifier\":\"789\",\n   \"foo\":\"far\"\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-length",
+							"key": "content-length",
+							"value": "38",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "text/html;charset=utf-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 02 Jun 2019 13:18:33 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Jetty(9.4.17.v20190418)",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": 51,
+					"body": "<h1>Record successfully Inserted</h1>\n"
+				}
+			]
+		},
+		{
+			"name": "Get123",
+			"request": {
+				"url": "http://localhost:8080/database/123",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "NewID234",
+			"request": {
+				"url": "localhost:8080/database",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"234\", \n\t\"year\": \"2019\", \n\t\"movie\": \"end game\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get234",
+			"request": {
+				"url": "http://localhost:8080/database/234",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GetNotExists",
+			"request": {
+				"url": "http://localhost:8080/database/567",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "NewID345_WrongFormat",
+			"request": {
+				"url": "localhost:8080/database",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\":\"345\"\n   \"year\":\"2019\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "NewID_NoID",
+			"request": {
+				"url": "localhost:8080/database",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"identifier\":\"345\",\n   \"year\":\"2019\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

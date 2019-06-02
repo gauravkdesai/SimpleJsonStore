@@ -94,6 +94,7 @@ public class SimpleJsonAsyncResponseWriter {
         }
     }
 
+
     /**
      * Util method to get response object from async context and set reaponse type as text/html
      *

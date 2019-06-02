@@ -1,9 +1,10 @@
-package com.gaurav.util;
+package com.gaurav.params;
 
 /**
  * Created by gauravdesai on 02/06/19.
  */
 public class Parameters {
+    private static final String DATABASE_CONNECTION_STRING = "mongodb://localhost";
     private static final String DATABASE_NAME = "GauravJSonStore";
     private static final String DB_COLLECTION = "documents";
     private static final int CORE_POOL_SIZE = 5;
@@ -38,5 +39,9 @@ public class Parameters {
 
     public static String getContextThreadpoolExecutorName() {
         return CONTEXT_THREADPOOL_EXECUTOR;
+    }
+
+    public static String getDatabaseConnectionString() {
+        return DATABASE_CONNECTION_STRING;
     }
 }
