@@ -31,7 +31,7 @@ public class SimpleJsonServlet extends HttpServlet {
         // extract id from request url path /database/id
         String pathInfo = request.getPathInfo();
         String id = pathInfo != null ? pathInfo.substring(1) : ""; // remove "/" from "/id" to get "id"
-
+        System.out.println("Searching for id="+id);
 
         // Start async context for asynchronous request processing
         AsyncContext asyncCtx = request.startAsync();
