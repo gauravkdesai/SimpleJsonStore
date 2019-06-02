@@ -13,17 +13,18 @@ import org.bson.Document;
  * All the methods in this class are static and singleton.
  * So any number of calls to this class will generate at max only one set of DB resources
  */
-public class DBAccessUtil {
+final public class DBAccessUtil {
 
     static private MongoClient dbClient;
     static private MongoDatabase database;
     static private MongoCollection<Document> collection;
 
-    static public final MongoClient getDBClient() {
+    public static final MongoClient getDBClient() {
         if (dbClient == null) {
             synchronized (DBAccessUtil.class) {
                 if (dbClient == null) {
-                    dbClient = MongoClients.create(); //TODO read DB details from property file
+                    dbClient = MongoClients.create(Parameters.getDatabaseConnectionString());
+                    System.out.println("Connected to DB at "+Parameters.getDatabaseConnectionString());
                 }
             }
         }
@@ -31,12 +32,13 @@ public class DBAccessUtil {
         return dbClient;
     }
 
-    static public final MongoDatabase getDatabase() {
+    public static final MongoDatabase getDatabase() {
 
         if (database == null) {
             synchronized (DBAccessUtil.class) {
                 if (database == null) {
-                    database = getDBClient().getDatabase(Parameters.getDatabaseName()); //TODO read DB name from property file
+                    database = getDBClient().getDatabase(Parameters.getDatabaseName());
+                    System.out.println("Using DB "+Parameters.getDatabaseName());
                 }
             }
         }
@@ -45,11 +47,12 @@ public class DBAccessUtil {
 
     }
 
-    static public final MongoCollection<Document> getCollection() {
+    public static final MongoCollection<Document> getCollection() {
         if (collection == null) {
             synchronized (DBAccessUtil.class) {
                 if (collection == null) {
-                    collection = getDatabase().getCollection(Parameters.getDbCollectionName()); //TODO read collection name from property file
+                    collection = getDatabase().getCollection(Parameters.getDbCollectionName());
+                    System.out.println("Using mongo db collection "+ Parameters.getDbCollectionName() +" to store json objects");
                 }
             }
         }
@@ -58,7 +61,7 @@ public class DBAccessUtil {
 
     }
 
-    public static void close() {
+    public static final void close() {
         if (dbClient != null) {
             System.out.println("Closing down DB client");
             dbClient.close();
