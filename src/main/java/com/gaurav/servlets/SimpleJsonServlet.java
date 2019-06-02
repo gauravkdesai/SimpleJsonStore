@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
@@ -52,7 +51,7 @@ public class SimpleJsonServlet extends HttpServlet {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) request.getServletContext().getAttribute("executor");
 
         String documentJson = request.getReader().lines().collect(Collectors.joining());
-        System.out.println("Document received="+documentJson);
+        System.out.println("Document received=" + documentJson);
 
         executor.execute(() -> SimpleJsonDAO.insertNewJsonToDB(documentJson, asyncCtx));
         System.out.println("doPost complete");
@@ -62,8 +61,6 @@ public class SimpleJsonServlet extends HttpServlet {
     public void destroy() {
         // TODO close DB connection
     }
-
-
 
 
 }

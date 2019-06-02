@@ -15,10 +15,10 @@ public class DBAccessUtil {
     static private MongoDatabase database;
     static private MongoCollection<Document> collection;
 
-    static public final MongoClient getDBClient(){
-        if(dbClient == null){
-            synchronized (DBAccessUtil.class){
-                if(dbClient == null){
+    static public final MongoClient getDBClient() {
+        if (dbClient == null) {
+            synchronized (DBAccessUtil.class) {
+                if (dbClient == null) {
                     dbClient = MongoClients.create(); //TODO read DB details from property file
                 }
             }
@@ -27,11 +27,11 @@ public class DBAccessUtil {
         return dbClient;
     }
 
-    static public final MongoDatabase getDatabase(){
+    static public final MongoDatabase getDatabase() {
 
-        if(database == null){
-            synchronized (DBAccessUtil.class){
-                if(database == null){
+        if (database == null) {
+            synchronized (DBAccessUtil.class) {
+                if (database == null) {
                     database = getDBClient().getDatabase("GauravJSonStore"); //TODO read DB name from property file
                 }
             }
@@ -41,10 +41,10 @@ public class DBAccessUtil {
 
     }
 
-    static public final MongoCollection<Document> getCollection(){
-        if(collection == null){
-            synchronized (DBAccessUtil.class){
-                if(collection == null){
+    static public final MongoCollection<Document> getCollection() {
+        if (collection == null) {
+            synchronized (DBAccessUtil.class) {
+                if (collection == null) {
                     collection = getDatabase().getCollection("documents"); //TODO read collection name from property file
                 }
             }
@@ -54,8 +54,8 @@ public class DBAccessUtil {
 
     }
 
-    public static void close(){
-        if(dbClient != null)
+    public static void close() {
+        if (dbClient != null)
             dbClient.close();
     }
 

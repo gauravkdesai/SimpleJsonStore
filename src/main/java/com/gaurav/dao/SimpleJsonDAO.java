@@ -16,19 +16,19 @@ import java.util.List;
  */
 public class SimpleJsonDAO {
 
-    public static void insertNewJsonToDB(String json, AsyncContext asyncContext){
+    public static void insertNewJsonToDB(String json, AsyncContext asyncContext) {
         Document doc = Document.parse(json);
         Throwable t = null;
 
         MongoCollection<Document> collection = DBAccessUtil.getCollection();
-        collection.insertOne(doc,(result,throwable)-> SimpleJsonAsyncResponseWriter.respondSuccessInsertOne(asyncContext,throwable));
+        collection.insertOne(doc, (result, throwable) -> SimpleJsonAsyncResponseWriter.respondSuccessInsertOne(asyncContext, throwable));
 
     }
 
-    public static void findDocumentById(String id , AsyncContext asyncContext){
+    public static void findDocumentById(String id, AsyncContext asyncContext) {
         MongoCollection<Document> collection = DBAccessUtil.getCollection();
         List<Document> documents = new ArrayList<>();
-        collection.find(Filters.eq("id", id)).into(documents, (document, throwable)-> SimpleJsonAsyncResponseWriter.respondFindResult(id, asyncContext, documents, throwable));
+        collection.find(Filters.eq("id", id)).into(documents, (document, throwable) -> SimpleJsonAsyncResponseWriter.respondFindResult(id, asyncContext, documents, throwable));
 
     }
 
