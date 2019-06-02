@@ -13,9 +13,18 @@ import java.util.List;
 
 /**
  * Created by gauravdesai on 01/06/19.
+ * <p>
+ * DAO class that acts as a bridge between front end servlet and Mongo DB access methods
  */
 public class SimpleJsonDAO {
 
+    /**
+     * Expects a valid json object and an async context to respond back asynchronously to user
+     * Adds the json object into MongoDB and then calls the async response
+     *
+     * @param json
+     * @param asyncContext
+     */
     public static void insertNewJsonToDB(String json, AsyncContext asyncContext) {
         Document doc = Document.parse(json);
         Throwable t = null;
@@ -25,6 +34,13 @@ public class SimpleJsonDAO {
 
     }
 
+    /**
+     * Expects an id to search on and async context to write async response back to user
+     * searches the id and finds all matching json objects and returns the collection to response writer
+     *
+     * @param id
+     * @param asyncContext
+     */
     public static void findDocumentById(String id, AsyncContext asyncContext) {
         MongoCollection<Document> collection = DBAccessUtil.getCollection();
         List<Document> documents = new ArrayList<>();

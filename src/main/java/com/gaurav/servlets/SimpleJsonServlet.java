@@ -15,6 +15,11 @@ import java.util.stream.Collectors;
 
 /**
  * Created by gauravdesai on 01/06/19.
+ * <p>
+ * Main Servlet which is face of this application
+ * exposes two methods, doGet and doPost
+ * doGet expects and id in url path for which we search for document in DB
+ * doPost expects a JSON object with id as one of the attribute. The JSON object is tored in DB
  */
 @WebServlet(urlPatterns = "/database/*", asyncSupported = true)
 public class SimpleJsonServlet extends HttpServlet {
@@ -22,45 +27,50 @@ public class SimpleJsonServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void init() throws ServletException {
-        //TODO initialize DB connection
-    }
-
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
-        //TODO get json from DBs
+        // extract id from request url path /database/id
         String pathInfo = request.getPathInfo();
-        String id = pathInfo.substring(1);
-//        response.getWriter().println("session=" + request.getSession(true).getId());
+        String id = pathInfo != null ? pathInfo.substring(1) : ""; // remove "/" from "/id" to get "id"
 
-//        AsyncContext context = request.startAsync();
+
+        // Start async context for asynchronous request processing
         AsyncContext asyncCtx = request.startAsync();
-        ThreadPoolExecutor executor = (ThreadPoolExecutor) request.getServletContext().getAttribute("executor");
 
+        // Get threadpool from context
+        ThreadPoolExecutor executor = getThreadPoolExecutorFromContext(request);
+
+        // Add async request to threadpool blocking queue
         executor.execute(() -> SimpleJsonDAO.findDocumentById(id, asyncCtx));
         System.out.println("doGet complete");
 
     }
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
-        //TODO get json from DBs
-        AsyncContext asyncCtx = request.startAsync();
-        ThreadPoolExecutor executor = (ThreadPoolExecutor) request.getServletContext().getAttribute("executor");
-
+        // Read json request body from request
         String documentJson = request.getReader().lines().collect(Collectors.joining());
         System.out.println("Document received=" + documentJson);
 
+        //TODO check if string is valid json object. only then start async context
+
+        // Start async context for asynchronous request processing
+        AsyncContext asyncCtx = request.startAsync();
+
+        // Get threadpool from context
+        ThreadPoolExecutor executor = getThreadPoolExecutorFromContext(request);
         executor.execute(() -> SimpleJsonDAO.insertNewJsonToDB(documentJson, asyncCtx));
         System.out.println("doPost complete");
     }
 
-    @Override
-    public void destroy() {
-        // TODO close DB connection
+    /**
+     * Gets executor threadpool from context
+     *
+     * @param request
+     * @return
+     */
+    private ThreadPoolExecutor getThreadPoolExecutorFromContext(HttpServletRequest request) {
+        return (ThreadPoolExecutor) request.getServletContext().getAttribute("context.threadpool.executor");
     }
-
 
 }

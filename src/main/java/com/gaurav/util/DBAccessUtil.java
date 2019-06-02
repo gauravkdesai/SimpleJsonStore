@@ -8,6 +8,10 @@ import org.bson.Document;
 
 /**
  * Created by gauravdesai on 01/06/19.
+ * <p>
+ * Utility class to access MongoDB via MongoDB Client
+ * All the methods in this class are static and singleton.
+ * So any number of calls to this class will generate at max only one set of DB resources
  */
 public class DBAccessUtil {
 
@@ -32,7 +36,7 @@ public class DBAccessUtil {
         if (database == null) {
             synchronized (DBAccessUtil.class) {
                 if (database == null) {
-                    database = getDBClient().getDatabase("GauravJSonStore"); //TODO read DB name from property file
+                    database = getDBClient().getDatabase(Parameters.getDatabaseName()); //TODO read DB name from property file
                 }
             }
         }
@@ -45,7 +49,7 @@ public class DBAccessUtil {
         if (collection == null) {
             synchronized (DBAccessUtil.class) {
                 if (collection == null) {
-                    collection = getDatabase().getCollection("documents"); //TODO read collection name from property file
+                    collection = getDatabase().getCollection(Parameters.getDbCollectionName()); //TODO read collection name from property file
                 }
             }
         }
@@ -55,8 +59,11 @@ public class DBAccessUtil {
     }
 
     public static void close() {
-        if (dbClient != null)
+        if (dbClient != null) {
+            System.out.println("Closing down DB client");
             dbClient.close();
+        }
+
     }
 
 
