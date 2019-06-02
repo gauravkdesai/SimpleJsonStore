@@ -1,11 +1,14 @@
 package com.gaurav.dao;
 
-import com.gaurav.DBAccessUtil;
+import com.gaurav.response.SimpleJsonAsyncResponseWriter;
+import com.gaurav.util.DBAccessUtil;
 import com.mongodb.async.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.AsyncContext;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -13,18 +16,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SimpleJsonDAO {
 
-    public static void insertNewJsonToDB(String json, HttpServletResponse response){
+    public static void insertNewJsonToDB(String json, AsyncContext asyncContext){
         Document doc = Document.parse(json);
         Throwable t = null;
 
         MongoCollection<Document> collection = DBAccessUtil.getCollection();
-        collection.insertOne(doc,(result,throwable)->SimpleJsonAyncResponseWriter.respondSuccessInsertOne(response,throwable));
+        collection.insertOne(doc,(result,throwable)-> SimpleJsonAsyncResponseWriter.respondSuccessInsertOne(asyncContext,throwable));
 
     }
 
-    public static void findDocumentById(String id , HttpServletResponse response){
+    public static void findDocumentById(String id , AsyncContext asyncContext){
         MongoCollection<Document> collection = DBAccessUtil.getCollection();
-        collection.find(Filters.eq("id", id)).first((document, throwable)->SimpleJsonAyncResponseWriter.respondFindResult(response, document, throwable));
+        List<Document> documents = new ArrayList<>();
+        collection.find(Filters.eq("id", id)).into(documents, (document, throwable)-> SimpleJsonAsyncResponseWriter.respondFindResult(id, asyncContext, documents, throwable));
 
     }
 

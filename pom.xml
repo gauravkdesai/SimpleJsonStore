@@ -12,10 +12,15 @@
 
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>javax.servlet</groupId>-->
+            <!--<artifactId>servlet-api</artifactId>-->
+            <!--<version>2.5</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>javax.servlet</groupId>
+            <groupId>org.mortbay.jetty</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <version>3.0.20100224</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -27,6 +32,12 @@
             <artifactId>mongodb-driver-async</artifactId>
             <version>${mongodbdriverversion}</version>
         </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -40,9 +51,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${javaversion}</source>
+                    <target>${javaversion}</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -54,6 +66,8 @@
 
         <!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-async -->
         <mongodbdriverversion>3.10.2</mongodbdriverversion>
+
+        <javaversion>1.8</javaversion>
     </properties>
 
 

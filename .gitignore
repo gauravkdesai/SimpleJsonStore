@@ -1,18 +1,4 @@
 
-.idea/workspace.xml
-.idea/misc.xml
-.idea/copyright/profiles_settings.xml
-.idea/compiler.xml
-.idea/libraries/Maven__javax_servlet_servlet_api_2_5.xml
-.idea/modules.xml
-.idea/vcs.xml
-MongoDBExample.iml
-SimpleJsonStore.iml
-target/SimpleJsonStore-1.0-SNAPSHOT.jar
-target/maven-archiver/pom.properties
-target/classes/com/gaurav/servlets/SimpleJsonStoreLauncher.class
-target/classes/com/gaurav/servlets/SimpleJsonServlet.class
-target/classes/com/gaurav/servlets/SimpleJsonHandler.class
-target/classes/com/gaurav/DBAccessUtil.class
-target/classes/com/gaurav/dao/SimpleJsonDAO.class
-target/classes/com/gaurav/dao/SimpleJsonAyncResponseWriter.class
+.idea/**
+*.iml
+target/**

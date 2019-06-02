@@ -1,4 +1,4 @@
-package com.gaurav;
+package com.gaurav.util;
 
 import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoClients;
@@ -52,6 +52,11 @@ public class DBAccessUtil {
 
         return collection;
 
+    }
+
+    public static void close(){
+        if(dbClient != null)
+            dbClient.close();
     }
 
 
